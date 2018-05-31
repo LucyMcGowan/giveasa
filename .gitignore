@@ -2,3 +2,5 @@
 shiny_app_token.rds
 rsconnect
 .Rproj.user*
+.Rproj.user
+.Rhistory
