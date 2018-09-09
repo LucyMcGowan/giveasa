@@ -40,9 +40,15 @@ body <- dashboardBody(
              src="https://platform.twitter.com/widgets.js" charset="utf-8">
              </script>')))
 )
-dashboardPage(
+tagList(
+  dashboardPage(
   dashboardHeader(disable = TRUE),
   dashboardSidebar(collapsed = TRUE),
   body
+),
+tags$footer(
+  HTML(glue::glue("&nbsp;Built with {emo::ji('heart')} by 
+                  <a href = 'https://www.lucymcgowan.com'>Lucy D'Agostino McGowan</a>",
+             .trim = FALSE)))
 )
 
