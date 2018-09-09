@@ -1,4 +1,7 @@
 library(shiny)
+library(plotly)
+goal <- 30000
+col <- "#DD4B39"
 
 shinyServer(function(input, output) {
   
@@ -13,25 +16,54 @@ shinyServer(function(input, output) {
     scales::dollar(total)
   })
   output$remaining <- renderText({
-    scales::dollar(30000 - total)
+    scales::dollar(goal - total)
   })
-  df <- data.frame(total = total)
-  output$plot <- renderPlot({
-    barplot(
-      df$total,
-      xlim = c(0.1, 1.5),
-      ylim = c(-10000, 30000), 
-      col = 2, 
-      border = 2,
-      xaxt = "n", 
-      yaxt = "n",
-      asp = 1/15000
-    )
-    plotrix::draw.ellipse(0.7, -2000, 0.6, 6000, col = 2, border = 2)
-    rect(0.2, df$total, 1.2, 30000, col = "white", border = NA)
-    rect(0.2, 0, 1.2, 30000, border = 2, lwd = 3)
-    axis(2, at = seq(0, 30000, by = 5000), las = 2, lwd = 3,
-         labels = sprintf("$%s", seq(0, 30000, by = 5000))
-    )
+  
+  plot_total <- min(goal, total) + 5000
+  diff <- goal - plot_total + 5000
+  
+  d <- data.frame(x = c(1, 1),
+                  y = c(plot_total, diff),
+                  label = c("Raised", "Goal"),
+                  amt = scales::dollar(c(total, goal)))
+
+  output$plot <- renderPlotly({
+    plot_ly(d, x = ~ x, y = ~ y, type = "bar",
+            marker = list(color = c(col, "white"),
+                          line = list(color = c("black"),
+                                      width = 2)),
+            hoverinfo = "text",
+            text = ~ paste(label, amt)) %>%
+      layout(shapes = list(
+        list(type = "circle",
+             xref = "x", x0 = 0.4, x1 = 1.6,
+             yref = "y", y0 = - 5000, y1 = 5000,
+             fillcolor = col, line = list(color = "black")),
+        list(type = "rect",
+             xref = "x", x0 = 0.63, x1 = 1.37,
+             yref = "y", y0 = 0, y1 = 5100,
+             fillcolor = col, line = list(color = col))
+      ),
+      yaxis = list(
+        scaleanchor = "x",
+        domain = c(0, 50000),
+        scaleratio = 1/10000,
+        zeroline = FALSE,
+        title = "",
+        tickvals = seq(5000, goal + 5000, by = 5000),
+        ticktext = scales::dollar(seq(0, goal, by = 5000))
+        
+      ),
+      xaxis = list(
+        zeroline = FALSE,
+        showline = FALSE,
+        showticklabels = FALSE,
+        showgrid = FALSE,
+        title = ""
+      ),
+      barmode = "stack") %>%
+      config(displayModeBar = FALSE)
   })
 })
+
+

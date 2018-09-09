@@ -1,22 +1,37 @@
 library(shiny)
+library(plotly)
 library(shinydashboard)
 
 body <- dashboardBody(
   fluidRow(
     box(width = 12, 
-        img(src = "http://www.amstat.org/images/ASAImages/giving/GiveASAlogo.png"))
+        img(
+          src = "http://www.amstat.org/images/ASAImages/giving/GiveASAlogo.png")
+        )
   ),
   fluidRow(
     box(
-      width = 6,
-      height = 500,
+      width = 3,
       status = "primary", 
-      plotOutput("plot")
+      plotlyOutput("plot")
     ),
-    valueBox(width = 3, uiOutput("total"), "Total funding", icon("money")),
-    valueBox(width = 3, uiOutput("remaining"), "Total remaining", icon("money"), color = "red"),
-    infoBox(width = 6, h3("Click here to donate"), href = "https://ww2.amstat.org/giving/givenow.cfm", color = "purple", icon = icon("thumbs-up"))
-  )
+    box(width = 9,
+        status = "primary", 
+        valueBox(width = 12, 
+                 uiOutput("total"), 
+                 "Total raised",
+                 icon("angle-double-up")),
+        valueBox(width = 12, 
+                 uiOutput("remaining"), 
+                 "Total remaining", 
+                 icon("bullseye"),
+                 color = "red"),
+        infoBox(width = 12,
+                h3("Click here to donate"), 
+                href = "https://ww2.amstat.org/giving/givenow.cfm", 
+                color = "purple",
+                icon = icon("money"))
+    ))
 )
 dashboardPage(
   dashboardHeader(disable = TRUE),
