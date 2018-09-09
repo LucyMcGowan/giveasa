@@ -26,7 +26,7 @@ shinyServer(function(input, output) {
                   y = c(plot_total, diff),
                   label = c("Raised", "Goal"),
                   amt = scales::dollar(c(total, goal)))
-
+  
   output$plot <- renderPlotly({
     plot_ly(d, x = ~ x, y = ~ y, type = "bar",
             marker = list(color = c(col, "white"),
@@ -40,33 +40,33 @@ shinyServer(function(input, output) {
           t = 50
         ),
         shapes = list(
-        list(type = "circle",
-             xref = "x", x0 = 0.4, x1 = 1.6,
-             yref = "y", y0 = - 5000, y1 = 5000,
-             fillcolor = col, line = list(color = "black")),
-        list(type = "rect",
-             xref = "x", x0 = 0.63, x1 = 1.37,
-             yref = "y", y0 = 0, y1 = 5100,
-             fillcolor = col, line = list(color = col))
-      ),
-      yaxis = list(
-        scaleanchor = "x",
-        domain = c(0, 50000),
-        scaleratio = 1/10000,
-        zeroline = FALSE,
-        title = "",
-        tickvals = seq(5000, goal + 5000, by = 5000),
-        ticktext = scales::dollar(seq(0, goal, by = 5000))
-        
-      ),
-      xaxis = list(
-        zeroline = FALSE,
-        showline = FALSE,
-        showticklabels = FALSE,
-        showgrid = FALSE,
-        title = ""
-      ),
-      barmode = "stack") %>%
+          list(type = "circle",
+               xref = "x", x0 = 0.4, x1 = 1.6,
+               yref = "y", y0 = - 5000, y1 = 5000,
+               fillcolor = col, line = list(color = "black")),
+          list(type = "rect",
+               xref = "x", x0 = 0.63, x1 = 1.37,
+               yref = "y", y0 = 0, y1 = 5100,
+               fillcolor = col, line = list(color = col))
+        ),
+        yaxis = list(
+          scaleanchor = "x",
+          domain = c(0, 50000),
+          scaleratio = 1/10000,
+          zeroline = FALSE,
+          title = "",
+          tickvals = seq(5000, goal + 5000, by = 5000),
+          ticktext = scales::dollar(seq(0, goal, by = 5000))
+          
+        ),
+        xaxis = list(
+          zeroline = FALSE,
+          showline = FALSE,
+          showticklabels = FALSE,
+          showgrid = FALSE,
+          title = ""
+        ),
+        barmode = "stack") %>%
       config(displayModeBar = FALSE)
   })
 })
