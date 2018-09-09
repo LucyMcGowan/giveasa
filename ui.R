@@ -15,8 +15,8 @@ body <- dashboardBody(
       status = "primary", 
       plotlyOutput("plot")
     ),
-    box(width = 9,
-        status = "primary", 
+    box(width = 6,
+        status = "primary",
         valueBox(width = 12, 
                  uiOutput("total"), 
                  "Total raised",
@@ -31,7 +31,14 @@ body <- dashboardBody(
                 href = "https://ww2.amstat.org/giving/givenow.cfm", 
                 color = "purple",
                 icon = icon("money"))
-    ))
+    ),
+    box(width = 3,
+        status = "primary",
+        HTML('<a class="twitter-timeline" data-height="500" 
+             href="https://twitter.com/AmstatNews?ref_src=twsrc%5Etfw">
+             Tweets by AmstatNews</a> <script async 
+             src="https://platform.twitter.com/widgets.js" charset="utf-8">
+             </script>')))
 )
 dashboardPage(
   dashboardHeader(disable = TRUE),
