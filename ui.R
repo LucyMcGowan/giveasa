@@ -1,7 +1,7 @@
 library(shiny)
 library(plotly)
 library(shinydashboard)
-
+library(emo)
 body <- dashboardBody(
   fluidRow(
     box(width = 12, 
@@ -13,10 +13,12 @@ body <- dashboardBody(
     box(
       width = 3,
       status = "primary", 
-      plotlyOutput("plot")
+      plotlyOutput("plot"),
+      height = 525
     ),
     box(width = 6,
         status = "primary",
+        height = 525,
         valueBox(width = 12, 
                  uiOutput("total"), 
                  "Total raised",
@@ -30,10 +32,15 @@ body <- dashboardBody(
                 h3("Click here to donate"), 
                 href = "https://ww2.amstat.org/giving/givenow.cfm", 
                 color = "purple",
-                icon = icon("money"))
+                icon = icon("money")),
+        HTML('<center><iframe
+             src="https://www.youtube.com/embed/ZNpVBXsGHoE" 
+             frameborder="0" allow="autoplay; encrypted-media" 
+             allowfullscreen></iframe></center>')
     ),
     box(width = 3,
         status = "primary",
+        height = 525,
         HTML('<a class="twitter-timeline" data-height="500" 
              href="https://twitter.com/AmstatNews?ref_src=twsrc%5Etfw">
              Tweets by AmstatNews</a> <script async 
@@ -48,7 +55,8 @@ tagList(
 ),
 tags$footer(
   HTML(glue::glue("&nbsp;Built with {emo::ji('heart')} by 
-                  <a href = 'https://www.lucymcgowan.com'>Lucy D'Agostino McGowan</a>",
+                  <a  target='_blank'
+                  href = 'https://www.lucymcgowan.com'>Lucy D'Agostino McGowan</a>",
              .trim = FALSE)))
 )
 

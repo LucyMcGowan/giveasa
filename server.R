@@ -34,7 +34,12 @@ shinyServer(function(input, output) {
                                       width = 2)),
             hoverinfo = "text",
             text = ~ paste(label, amt)) %>%
-      layout(shapes = list(
+      layout(
+        title = "How are we doing?",
+        margin = list(
+          t = 50
+        ),
+        shapes = list(
         list(type = "circle",
              xref = "x", x0 = 0.4, x1 = 1.6,
              yref = "y", y0 = - 5000, y1 = 5000,
